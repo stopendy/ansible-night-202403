@@ -33,3 +33,6 @@
           - 192.168.2.0/24 192.168.1.1
         autoconnect: true
         state: present
+
+    - name: Bring up ens4 to for configuration change to take effect
+      ansible.builtin.command: nmcli connection up ens4
