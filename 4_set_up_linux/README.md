@@ -129,10 +129,11 @@ ip -br address show
 ![../images/network_diagram.png](../images/network_diagram.png)
 
 では、プレイブックを実行しましょう。  
+毎回dnfモジュールのタスクが完了するのはつらいので、今回はタスクを途中から実行するために`--start-at-task`オプション付きでコマンド実行します。  
 ([playbook_4_nmcli.yml](playbook_4_nmcli.yml))
 
 ```sh
-ansible-playbook -i hosts 4_set_up_linux/playbook_4_nmcli.yml
+ansible-playbook -i hosts 4_set_up_linux/playbook_4_nmcli.yml --start-at-task 'Configure IP address'
 ```
 
 以上で`linux1`のセットアップ自動化は完了です。  

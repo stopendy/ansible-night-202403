@@ -104,7 +104,7 @@ ansible -i hosts linux -v -a 'ip route show proto static'
 ([playbook_2_add_index_html.yml](playbook_2_add_index_html.yml))
 
 ```sh
-ansible-playbook -i hosts 5_use_variables/playbook_2_add_index_html.yml
+ansible-playbook -i hosts 5_use_variables/playbook_2_add_index_html.yml --start-at-task 'Put index.html'
 ```
 
 プレイブック実行後、`ansible1`から`linux1`にcurlを実行すると以下の応答が帰るようになったはずです。
