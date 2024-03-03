@@ -65,7 +65,6 @@ ansible-playbook -i hosts 4_set_up_linux/playbook_2_set_up_httpd.yml
 
 ![images/result_2_httpd.png](images/result_2_httpd.png)
 
-
 (任意)  
 プレイブック実行後、確認コマンドをもう一度実行して状態が変わったことを確認してください。
 
