@@ -89,8 +89,7 @@ Terminal > New Terminal (Ctrl+Shift+`)
 以下のコマンドを実行してください。
 
 ```sh
-cd 2_hello_world
-ansible-playbook playbook.yml
+ansible-playbook 2_hello_world/playbook.yml
 ```
 
 以下のような実行結果を得られれば成功です。
