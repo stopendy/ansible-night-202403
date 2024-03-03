@@ -1,0 +1,79 @@
+- name: Set up Linux
+  hosts: linux
+  gather_facts: false
+
+  tasks:
+    - name: Install httpd
+      ansible.builtin.dnf:
+        name:
+          - httpd
+        state: present
+
+    - name: Start and enable httpd.service
+      ansible.builtin.systemd_service:
+        name: httpd.service
+        state: started
+        enabled: true
+
+    - name: Permit TCP 80 at firewalld
+      ansible.posix.firewalld:
+        zone: public
+        port: 80/tcp
+        permanent: true
+        immediate: true
+        state: enabled
+
+    - name: Configure IP address
+      community.general.nmcli:
+        conn_name: ens4
+        type: ethernet
+        method4: manual
+        ip4: '{{ ens4_ip4 }}'
+        routes4: '{{ ens4_routes4 }}'
+        autoconnect: true
+        state: present
+
+    - name: Bring up ens4 to for configuration change to take effect
+      ansible.builtin.command: nmcli connection up ens4
+
+    - name: Put index.html
+      ansible.builtin.copy:
+        content: |
+          {{ inventory_hostname }}
+        dest: /var/www/html/index.html
+
+- name: Set up Arista vEOS
+  hosts: veos1
+  gather_facts: false
+
+  tasks:
+    - name: Enable IP forwarding
+      arista.eos.eos_config:
+        lines:
+          - ip routing
+        diff_against: running
+
+    - name: Configure interfaces base configuration
+      arista.eos.eos_interfaces:
+        config:
+          - name: Ethernet1
+            description: linux1 ens4
+            mode: layer3
+          - name: Ethernet2
+            description: linux2 ens4
+            mode: layer3
+
+    - name: Set IP addresses on L3 interfaces
+      arista.eos.eos_l3_interfaces:
+        config:
+          - name: Ethernet1
+            ipv4:
+              - address: 192.168.1.1/24
+          - name: Ethernet2
+            ipv4:
+              - address: 192.168.2.1/24
+
+    - name: Copy running-config startup-config
+      arista.eos.eos_config:
+        save_when: always
+        diff_against: startup

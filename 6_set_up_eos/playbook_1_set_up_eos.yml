@@ -1,0 +1,35 @@
+- name: Set up Arista vEOS
+  hosts: veos1
+  gather_facts: false
+
+  tasks:
+    - name: Enable IP forwarding
+      arista.eos.eos_config:
+        lines:
+          - ip routing
+        diff_against: running
+
+    - name: Configure interfaces base configuration
+      arista.eos.eos_interfaces:
+        config:
+          - name: Ethernet1
+            description: linux1 ens4
+            mode: layer3
+          - name: Ethernet2
+            description: linux2 ens4
+            mode: layer3
+
+    - name: Set IP addresses on L3 interfaces
+      arista.eos.eos_l3_interfaces:
+        config:
+          - name: Ethernet1
+            ipv4:
+              - address: 192.168.1.1/24
+          - name: Ethernet2
+            ipv4:
+              - address: 192.168.2.1/24
+
+    - name: Copy running-config startup-config
+      arista.eos.eos_config:
+        save_when: always
+        diff_against: startup
