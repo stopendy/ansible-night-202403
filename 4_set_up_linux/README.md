@@ -30,6 +30,7 @@ ansible-playbook -i hosts 4_set_up_linux/playbook_1_ping.yml
 | [../hosts](../hosts) | インベントリ |
 | [../group_vars/linux.yml](../group_vars/linux.yml) | グループ変数。今回は認証情報を格納 |
 | [../host_vars/linux1.yml](../host_vars/linux1.yml) | ホスト変数。今回は接続先IPアドレス情報を格納 |
+| [../ansible.cfg](../ansible.cfg) | Ansible設定ファイル。<br>必須の設定は`host_key_checking = False`。<br>この設定によりSSHフィンガープリント未登録の警告を迂回する。<br>この設定がない場合、手動で`ansible1`から`linux1`にSSH接続してフィンガープリントを登録する工程が必要となる |
 
 ## Apache httpdのインストール
 
@@ -64,7 +65,6 @@ ansible-playbook -i hosts 4_set_up_linux/playbook_2_set_up_httpd.yml
 設定変更された場合には`changed`と表示されます。
 
 ![images/result_2_httpd.png](images/result_2_httpd.png)
-
 
 (任意)  
 プレイブック実行後、確認コマンドをもう一度実行して状態が変わったことを確認してください。
