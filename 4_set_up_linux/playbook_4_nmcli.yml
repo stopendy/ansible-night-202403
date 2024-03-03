@@ -28,6 +28,6 @@
         conn_name: ens4
         type: ethernet
         method4: manual
-        ip4: 1.1.1.2/24
+        ip4: 192.168.1.2/24
         autoconnect: true
         state: present
