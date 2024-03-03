@@ -1,1 +1,7 @@
 ansible_host: 192.168.0.12
+
+# Used in 5_use_variables
+
+ens4_ip4: 192.168.1.2/24
+ens4_routes4:
+  - 192.168.2.0/24 192.168.1.1
