@@ -29,3 +29,5 @@
 | ディレクトリ | やること概要 |
 | ---------- | ---------- |
 | [1_install_ansible](1_install_ansible) | Ansibleをインストールする |
+| [2_hello_world](2_hello_world) | 最も簡単なプレイブックを実行する |
+| [3_use_vs_code](3_use_vs_code) | VS CodeでAnsibleサーバに接続し、プレイブックを実行する |
