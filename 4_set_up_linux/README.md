@@ -123,6 +123,9 @@ ip -br address show
 今回は、`ens4`に`192.168.1.2/24`というIPアドレスをアサインします。  
 また、後続のデモのため`192.168.2.0/24 via 192.168.1.1`というルーティング設定を追加しておきます。
 
+`nmcli`モジュールはコネクション設定を変更した後に反映まではしてくれないので、[ansible.builtin.command](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html#ansible-collections-ansible-builtin-command-module)モジュールで設定反映のコマンドを実行します。  
+このコマンドは`nmcli`のタスクがChangedとなった場合のみ実行すれば良いのですが、今回はまだ[whenキーワード](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html)を知らない体で、シンプルに毎回実行します。
+
 ![../images/network_diagram.png](../images/network_diagram.png)
 
 では、プレイブックを実行しましょう。  
