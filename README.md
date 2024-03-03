@@ -32,3 +32,4 @@
 | [2_hello_world](2_hello_world) | 最も簡単なプレイブックを実行する |
 | [3_use_vs_code](3_use_vs_code) | VS CodeでAnsibleサーバに接続し、プレイブックを実行する |
 | [4_set_up_linux](4_set_up_linux) | AnsibleでLinuxを初期設定する |
+| [5_use_variables](5_use_variables) | 複数のLinuxを一括自動化するためにインベントリ変数を活用する |
