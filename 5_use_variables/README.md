@@ -3,6 +3,7 @@
 - [linux2を自動設定する](#linux2を自動設定する)
   - [(参考) インベントリ変数の必要性](#参考-インベントリ変数の必要性)
   - [プレイブックの実行](#プレイブックの実行)
+- [index.html](#indexhtml)
 
 ## linux2を自動設定する
 
@@ -54,7 +55,7 @@ httpdのインストールと起動、そしてfirewalldの設定については
 - [../host_vars/linux2.yml](../host_vars/linux2.yml)
 
 `linux1`と`linux2`の両方の自動化に対応したプレイブックを示します。  
-([playbook.yml](playbook.yml))
+([playbook_1_use_variables.yml](playbook_1_use_variables.yml))
 
 変更したのは以下の3点です。
 
@@ -65,7 +66,7 @@ httpdのインストールと起動、そしてfirewalldの設定については
 では、プレイブックを実行してみましょう。
 
 ```sh
-ansible-playbook -i hosts 5_use_variables/playbook.yml
+ansible-playbook -i hosts 5_use_variables/playbook_1_use_variables.yml
 ```
 
 `linux1`と`linux2`の設定をそれぞれ確認してみましょう。  
@@ -82,3 +83,36 @@ Ansibleで確認するなら以下のコマンドになります。
 ansible -i hosts linux -v -a 'ip -br address show'
 ansible -i hosts linux -v -a 'ip route show proto static'
 ```
+
+## index.html
+
+追加でもう一つ処理を加えてみましょう。  
+ここではindex.htmlを作成します。
+
+なぜこのタイミングで実施するかというと、この処理にも変数を使うためです。
+
+今回は[ansible.builtin.copy](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)モジュールを使います。  
+このモジュールは、リモートにファイルを生成する機能を持ちます。  
+基本的にはローカルからリモートにファイルコピーするのが基本機能ですが、`content`パラメータを指定することで「任意の文字列」を含むファイルをターゲットノード上に作ることができます。
+
+今回は、このモジュールを使って「ホスト名が書いてある`index.html`」を配置します。  
+ホスト名は`inventory_hostname`という変数を使って表現します。  
+`inventory_hostname`は[Special Variables](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html)と呼ばれ、定義せずとも初めから値が代入されている特殊な変数です。  
+今回のケースでは[../hosts](../hosts)に記述されたターゲットノード名 (`linux1`か`linux2`) が代入されています。
+
+では、プレイブックを実行してみましょう。  
+([playbook_2_add_index_html.yml](playbook_2_add_index_html.yml))
+
+```sh
+ansible-playbook -i hosts 5_use_variables/playbook_2_add_index_html.yml
+```
+
+プレイブック実行後、`ansible1`から`linux1`にcurlを実行すると以下の応答が帰るようになったはずです。
+
+```sh
+curl 192.168.0.12
+# linux1
+```
+
+以上でLinuxの自動化は完了です。  
+お疲れ様でした。
