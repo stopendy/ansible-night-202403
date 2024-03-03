@@ -1,0 +1,16 @@
+- name: Set up Linux
+  hosts: linux1
+  gather_facts: false
+
+  tasks:
+    - name: Install httpd
+      ansible.builtin.dnf:
+        name:
+          - httpd
+        state: present
+
+    - name: Start and enable httpd.service
+      ansible.builtin.systemd_service:
+        name: httpd.service
+        state: started
+        enabled: true
