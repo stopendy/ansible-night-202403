@@ -7,7 +7,7 @@
 ## 実行コマンド
 
 ```sh
-ansible-playbook -i hosts 2_hello_world/playbook.yml
+ansible-playbook 2_hello_world/playbook.yml
 ```
 
 ## 解説
