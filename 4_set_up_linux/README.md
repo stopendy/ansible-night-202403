@@ -93,10 +93,11 @@ ansible -m ansible.posix.firewalld_info -i hosts -v linux1
 ```
 
 では、以下のコマンドでプレイブックを実行しましょう。  
-([playbook_3_permit_httpd_at_firewalld.yml](playbook_3_permit_httpd_at_firewalld.yml))
+([playbook_3_permit_httpd_at_firewalld.yml](playbook_3_permit_httpd_at_firewalld.yml))  
+今回からはタスクを途中から実行するために`--start-at-task`オプション付きでコマンド実行します。
 
 ```sh
-ansible-playbook -i hosts 4_set_up_linux/playbook_3_permit_httpd_at_firewalld.yml
+ansible-playbook -i hosts 4_set_up_linux/playbook_3_permit_httpd_at_firewalld.yml --start-at-task 'Permit TCP 80 at firewalld'
 ```
 
 以下のような実行結果を得られていれば成功です。  
@@ -129,7 +130,6 @@ ip -br address show
 ![../images/network_diagram.png](../images/network_diagram.png)
 
 では、プレイブックを実行しましょう。  
-毎回dnfモジュールのタスクが完了するのはつらいので、今回はタスクを途中から実行するために`--start-at-task`オプション付きでコマンド実行します。  
 ([playbook_4_nmcli.yml](playbook_4_nmcli.yml))
 
 ```sh
