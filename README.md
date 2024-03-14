@@ -33,3 +33,4 @@
 | [3_use_vs_code](3_use_vs_code) | VS CodeでAnsibleサーバに接続し、プレイブックを実行する |
 | [4_set_up_linux](4_set_up_linux) | AnsibleでLinuxを初期設定する |
 | [5_use_variables](5_use_variables) | 複数のLinuxを一括自動化するためにインベントリ変数を活用する |
+| [6_set_up_eos](6_set_up_eos) | ネットワーク機器を自動化する。Arista vEOSを利用 |
